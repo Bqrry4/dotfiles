@@ -1,0 +1,7 @@
+[general]
+import = [
+  "./color.toml",  
+  "./preferences.toml",
+  "./fonts.toml",
+  "./bindings.toml",
+]

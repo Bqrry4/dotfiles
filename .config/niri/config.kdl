@@ -1,0 +1,275 @@
+environment {
+    DISPLAY ":1"
+    GBM_BACKEND "nvidia-drm"
+   __GLX_VENDOR_LIBRARY_NAME "nvidia"
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+spawn-at-startup "waybar"
+spawn-at-startup "xwayland-satellite"
+spawn-at-startup "swaybg" "-i" "/home/bqrry/Downloads/848404.jpg"
+
+input {
+    workspace-auto-back-and-forth	
+    
+    keyboard {
+        xkb {
+            layout "ro"
+        }
+    }
+
+    touchpad {
+	tap
+        natural-scroll
+    }
+
+    mouse {}
+    trackpoint {}
+
+}
+
+output "eDP-1" {
+    mode "1920x1080"
+    scale 1.0
+    transform "normal"
+    position x=0 y=0
+    background-color "#0f0f0f"
+}
+
+cursor {
+    xcursor-theme "Future-cyan-cursors"
+    hide-when-typing
+    hide-after-inactive-ms 3000
+}
+
+overview {
+    backdrop-color "#0b0d11"
+    zoom 0.5
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+layout {
+    gaps 8
+    center-focused-column "never"
+    always-center-single-column
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+	proportion 1.0
+    }
+    tab-indicator {
+        hide-when-single-tab
+        place-within-column
+	gap 10
+        width 3
+        length total-proportion=0.6
+        position "left"
+        gaps-between-tabs 20
+        corner-radius 8
+        active-color "#8B76EA"
+        inactive-color "#FFFFFF20"
+    }
+
+    default-column-width { 
+        //proportion 0.5;
+    }
+
+    insert-hint {
+        gradient from="#80c8ff80" to="#ffffff80" angle=45 relative-to="workspace-view"
+    }
+
+    focus-ring {
+        width 2
+        active-color "#fdfbfc"
+        //active-gradient from="#80c8ff" to="#ffffff" angle=45 relative-to="workspace-view"
+    }
+
+    border { off; }
+    
+    struts {}
+
+}
+
+
+animations {
+    workspace-switch {
+        spring damping-ratio=1.0 stiffness=2000 epsilon=0.0001
+    }
+    /-horizontal-view-movement {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-movement {
+        spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
+    }
+    window-open {
+        spring damping-ratio=0.5 stiffness=2000 epsilon=0.0001
+    }
+    window-close {
+        spring damping-ratio=0.5 stiffness=2000 epsilon=0.0001
+    }
+    overview-open-close {
+        spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+    }
+     screenshot-ui-open {
+        duration-ms 200
+        curve "ease-out-quad"
+    }
+    //slowdown 1.2
+}
+
+window-rule {
+    min-height 200
+    min-width 200
+    geometry-corner-radius 4
+    clip-to-geometry true
+
+    /-shadow {
+        on
+        softness 12
+        spread 4
+        offset x=0 y=0
+        color "#00000090"
+        draw-behind-window true
+    }
+}
+
+
+window-rule {
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    
+    open-floating true
+    open-focused false
+    default-floating-position x=32 y=32 relative-to="bottom-right"
+    default-column-width { fixed 400; }
+    default-window-height { fixed 225; }
+}
+
+window-rule {
+    match title="^$"
+    open-floating true
+}
+
+
+binds {
+//--Keeb--------------------------------    
+    Mod+Alt+X   { spawn "alacritty"; }
+    Mod+Escape  { close-window; }
+    Alt+Space   { spawn "fuzzel"; } 
+    Super+Alt+L allow-inhibiting=false { spawn "swaylock"; }
+    Mod+Shift+P { power-off-monitors; }
+    
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    Alt+Tab repeat=false { toggle-overview; }
+    
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up    { focus-window-or-workspace-up; }
+    Mod+Down  { focus-window-or-workspace-down; }   
+   
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    Mod+Shift+Left  { focus-column-first; }
+    Mod+Shift+Right { focus-column-last; }
+   
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+   
+    Mod+Alt+Left  { consume-or-expel-window-left; }
+    Mod+Alt+Right { consume-or-expel-window-right; }
+
+    Mod+Space { maximize-column; }
+    Mod+Alt+Space { fullscreen-window; }    
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    Mod+Tab { focus-workspace-previous; }
+
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+Z { switch-preset-column-width; }
+    Mod+Shift+Z { switch-preset-window-height; }
+    Mod+Ctrl+Z { reset-window-height; }
+
+    Mod+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+   
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+F      { toggle-window-floating; }
+    Mod+Ctrl+F { switch-focus-between-floating-and-tiling; }
+
+    Mod+V { toggle-column-tabbed-display; }
+    //Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+//--Mouse-------------------------------
+    Mod+WheelScrollDown   cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp     cooldown-ms=150 { focus-workspace-up; }
+    
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+Shift+WheelScrollDown { focus-column-right; }
+    Mod+WheelScrollLeft     { focus-column-left; }
+    Mod+Shift+WheelScrollUp { focus-column-left; }
+     
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+Ctrl+WheelScrollRight      { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft     { move-column-left; }
+    Mod+Ctrl+Shift+WheelScrollUp { move-column-left; }
+
+//--Touchpad----------------------------- 
+    Mod+TouchpadScrollDown { spawn "light" "-A" "1"; }
+    Mod+TouchpadScrollUp   { spawn "light" "-U" "1"; }
+
+} 

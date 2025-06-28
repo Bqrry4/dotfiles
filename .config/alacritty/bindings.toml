@@ -1,0 +1,8 @@
+[keyboard]
+bindings = [
+    { key="Up", mods="Control", action="ScrollLineUp" },
+    { key="Down", mods="Control", action="ScrollLineDown" },
+    { key="Up", mods="Control|Shift", action="ScrollPageUp" },
+    { key="Down", mods="Control|Shift", action="ScrollPageDown" },
+]
+
