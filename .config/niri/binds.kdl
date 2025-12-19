@@ -1,0 +1,132 @@
+binds {
+Mod+Shift+Ctrl+D { debug-toggle-damage; }
+
+    Ctrl+Print {
+        spawn "sh" "-c" r#"
+            file=~/Videos/recordings/"$(date +%s)".mp4
+            gpu-screen-recorder -w region -region "$(slurp -b '#00000090' -w 0 -f %wx%h+%x+%y)" -o "$file"
+            wl-copy file:/"$file" -t text/uri-list
+        "#;
+    }
+
+    Ctrl+Escape { spawn "pkill" "-SIGINT" "-f" "gpu-screen-recorder"; }
+//--Keeb--------------------------------    
+    Mod+Alt+X   { spawn "alacritty"; }
+    Mod+Escape  { close-window; }
+    Alt+Space   { spawn "fuzzel"; } 
+    Super+Alt+L allow-inhibiting=false { spawn "qs" "-c" "lockscreen" "ipc" "call" "lock" "lock"; }
+    Mod+Shift+P { power-off-monitors; }
+    
+    Mod+Shift+E { quit; }
+    Ctrl+Alt+Delete { quit; }
+
+    Alt+Tab repeat=false { toggle-overview; }
+    
+    Print { screenshot; }
+    //Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    Mod+Left  { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up    { focus-window-or-workspace-up; }
+    Mod+Down  { focus-window-or-workspace-down; }   
+   
+    Mod+Home { focus-column-first; }
+    Mod+End  { focus-column-last; }
+    //Mod+Shift+Left  { focus-column-first; }
+    //Mod+Shift+Right { focus-column-last; }
+   
+    Mod+Ctrl+Left  { move-column-left; }
+    Mod+Ctrl+Right { move-column-right; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+
+    Mod+Shift+Left { set-column-width "-10%"; }
+    Mod+Shift+Right { set-column-width "+10%"; }
+    Mod+Shift+Up { set-window-height "-10%"; }
+    Mod+Shift+Down { set-window-height "+10%"; }
+
+    Mod+Alt+Left  { consume-or-expel-window-left; }
+    Mod+Alt+Right { consume-or-expel-window-right; }
+
+    Mod+Space { maximize-column; }
+    Mod+Alt+Space { fullscreen-window; }    
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+
+    Mod+Shift+Page_Down { move-workspace-down; }
+    Mod+Shift+Page_Up   { move-workspace-up; }
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Ctrl+1 { move-column-to-workspace 1; }
+    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Mod+Ctrl+3 { move-column-to-workspace 3; }
+    Mod+Ctrl+4 { move-column-to-workspace 4; }
+    Mod+Ctrl+5 { move-column-to-workspace 5; }
+    Mod+Ctrl+6 { move-column-to-workspace 6; }
+    Mod+Ctrl+7 { move-column-to-workspace 7; }
+    Mod+Ctrl+8 { move-column-to-workspace 8; }
+    Mod+Ctrl+9 { move-column-to-workspace 9; }
+
+    Mod+Tab { focus-workspace-previous; }
+
+    Mod+Comma  { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+Z { switch-preset-column-width; }
+    Mod+Shift+Z { switch-preset-window-height; }
+    Mod+Ctrl+Z { reset-window-height; }
+
+    Mod+C { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+   
+    Mod+F      { toggle-window-floating; }
+    Mod+Ctrl+F { switch-focus-between-floating-and-tiling; }
+
+    Mod+V { toggle-column-tabbed-display; }
+    //Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+//--Mouse-------------------------------
+    Mod+WheelScrollDown   cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp     cooldown-ms=150 { focus-workspace-up; }
+    
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+Shift+WheelScrollDown { focus-column-right; }
+    Mod+WheelScrollLeft     { focus-column-left; }
+    Mod+Shift+WheelScrollUp { focus-column-left; }
+     
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+Ctrl+WheelScrollRight      { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft     { move-column-left; }
+    Mod+Ctrl+Shift+WheelScrollUp { move-column-left; }
+
+//--Touchpad----------------------------- 
+    //Mod+TouchpadScrollDown  { spawn "light" "-A" "1"; }
+    //Mod+TouchpadScrollUp    { spawn "light" "-U" "1"; }
+    //Mod+TouchpadScrollLeft  { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.01+ -l 1.0"; }
+    //Mod+TouchpadScrollRight { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.01-"; }
+    Mod+TouchpadScrollRight { spawn-sh "qs -c sh ipc call sink inc -0.01"; } 
+    Mod+TouchpadScrollLeft  { spawn-sh "qs -c sh ipc call sink inc +0.01"; }
+    Mod+TouchpadScrollDown  { spawn-sh "qs -c sh ipc call brightness inc +1";  }
+    Mod+TouchpadScrollUp    { spawn-sh "qs -c sh ipc call brightness inc -1";  }
+    
+} 
