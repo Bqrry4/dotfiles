@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 
+import qs
 import qs.services
 import qs.components
 
@@ -10,13 +11,16 @@ Item {
     height: 5
     width: 405
 
-    readonly property real time_value: (Time.hours + Time.minutes / 60) / 24
+    readonly property real time_value: (TimeService.hours + TimeService.minutes / 60) / 24
     Flow {
         flow: Flow.LeftToRight
         spacing: 25
 
         ProgressLine {
             id: progress
+            hcolor: Settings.c1
+            bcolor: Settings.c2
+
             width: 400
             height: root.height
             value: time_value
@@ -25,32 +29,34 @@ Item {
 
             SunDot {
                 id: sunrise
-                value: Sunrise.sun_position.sunrise
-                color: "white"
+                value: SunriseService.sun_position.sunrise
+                color: Settings.c3
                 radius: 5
             }
 
             SunDot {
                 id: solar_noon
-                value: Sunrise.sun_position.solar_noon
-
-                color: "white"
+                value: SunriseService.sun_position.solar_noon
+                color: Settings.c3
                 radius: 5
             }
 
             SunDot {
                 id: sunset
-                value: Sunrise.sun_position.sunset
-                color: "white"
+                value: SunriseService.sun_position.sunset
+                color: Settings.c3
                 radius: 5
             }
         }
 
         ProgressLine {
             id: progress_minutes
+            hcolor: Settings.c1
+            bcolor: Settings.c2
+
             width: 100
             height: root.height
-            value: (Time.minutes / 60)
+            value: (TimeService.minutes / 60)
             divisions: 6
             group: 3
         }

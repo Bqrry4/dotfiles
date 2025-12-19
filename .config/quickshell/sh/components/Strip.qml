@@ -48,11 +48,6 @@ Rectangle {
         Transition {
             from: "collapsed"
             to: "expanded"
-            NumberAnimation {
-                properties: "width, height"
-                duration: 300
-                easing.type: Easing.InOutQuad
-            }
         },
         Transition {
             from: "expanded"

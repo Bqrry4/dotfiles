@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Shapes
 
@@ -6,33 +8,49 @@ Item {
     required property real value
     property int divisions: 0
     property int group: 0
+    property color hcolor
+    property color bcolor
+    property bool noDelay
+
     Rectangle {
         id: filled
-        // color: "#FFB259"
-        color: "#ff661f"
-        // radius: 5
+        color: root.hcolor
         bottomLeftRadius: 5
         topLeftRadius: 5
         height: parent.height
         width: parent.width * parent.value
+
+        Behavior on width {
+            PropertyAnimation {
+                easing.type: Easing.InOutQuad
+                duration: (root.noDelay)? 0: 500
+            }
+        }
     }
 
     Rectangle {
         id: empty
-        // opacity: 0.5
         radius: 1
-        color: "#001D3F"
+        color: root.bcolor
         anchors {
             left: filled.right
         }
         height: parent.height
         width: parent.width - filled.width
+
+        PropertyAnimation {
+            property: "width"
+            easing.type: Easing.InOutElastic
+            duration: (root.noDelay)? 0: 3000
+        }
     }
 
     Repeater {
         model: root.divisions - 1
 
         Rectangle {
+            required property int index
+
             width: ((index + 1) % root.group) ? 1 : 3
             height: root.height
             color: "black"

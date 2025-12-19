@@ -3,6 +3,8 @@ import Quickshell
 import Quickshell.Wayland
 
 ShellRoot {
+    id: root
+    property string path: "/home/bqrry/Downloads/wallhaven-nm35e1.jpg"
     Variants {
         model: Quickshell.screens
 
@@ -24,7 +26,7 @@ ShellRoot {
 
             Wallpaper {
                 anchors.fill: parent
-                mediaPath: "/home/bqrry/Desktop/mystery_cat.mp4"
+                mediaPath: root.path
             }
         }
     }
@@ -51,7 +53,7 @@ ShellRoot {
 
             Wallpaper {
                 anchors.fill: parent
-                mediaPath: "/home/bqrry/Desktop/mystery_cat.mp4"
+                mediaPath: root.path
             }
         }
     }

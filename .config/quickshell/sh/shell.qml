@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
@@ -9,6 +10,8 @@ import qs.components
 import qs.services
 import qs.modules.panels
 import qs.modules.clock
+import qs.modules.notifs
+import qs.modules.w_decorations
 
 ShellRoot {
     Variants {
@@ -17,9 +20,10 @@ ShellRoot {
 
         PanelWindow {
             id: w
-            // Component.onCompleted: {
-            //     console.log(JSON.stringify(PowerProfiles.profile));
-            // }
+            Component.onCompleted: {
+                console.log(JSON.stringify(PowerProfiles.profile));
+                console.log(JSON.stringify(UPower.displayDevice));
+            }
             property var modelData
             screen: modelData
 
@@ -38,13 +42,18 @@ ShellRoot {
                 //     intersection: Intersection.Combine
                 // }
                 Region {
-                    regions: [panel.region]
+                    regions: [panel.region, tweak.region, notif.region]
                 }
+
             }
 
             WlrLayershell.layer: WlrLayer.Top
             WlrLayershell.exclusionMode: ExclusionMode.Ignore
             WlrLayershell.namespace: "shell"
+
+
+
+            property int iconSize: 20
 
             CornerPanel {
                 id: panel
@@ -56,39 +65,158 @@ ShellRoot {
                 }
 
                 vStrip: [
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/cpu.svg")
-                        implicitSize: 22
+                    Image {
+                        width: iconSize
+                        height: iconSize
+                        source: Qt.resolvedUrl("./icons/cat_sleep.svg")
+                        fillMode: Image.Stretch
                     },
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/cpu-2.svg")
-                        implicitSize: 22
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/battery.svg")
+                            implicitSize: iconSize
+                        }
                     },
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/memory.svg")
-                        implicitSize: 22
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/mobiledata.svg")
+                            implicitSize: iconSize
+                        }
                     },
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/stat_sys_wifi_signal_3.png")
-                        implicitSize: 24
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/server-2.svg")
+                            implicitSize: iconSize
+                        }
                     }
                 ]
 
                 hStrip: [
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/cpu.svg")
-                        implicitSize: 22
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/cpu.svg")
+                            implicitSize: iconSize
+                            // layer.enabled: true
+                            // layer.effect: MultiEffect {
+                            //     shadowEnabled: true
+                            //     shadowBlur: 1.0
+                            //     shadowScale: 1.2
+                            //     shadowColor: "white"
+                            // }
+                        }
                     },
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/cpu-2.svg")
-                        implicitSize: 22
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/cpu-2.svg")
+                            implicitSize: iconSize
+                        }
                     },
-                    IconImage {
-                        source: Qt.resolvedUrl("./icons/memory.svg")
-                        implicitSize: 22
+                    Rectangle {
+                        color: "transparent"
+                        width: children[0].width
+                        height: children[0].height
+                        IconImage {
+                            source: Qt.resolvedUrl("./icons/memory.svg")
+                            implicitSize: iconSize
+                        }
+                    },
+                    // Rectangle {
+                    //     width: iconSize
+                    //     height: iconSize
+                    //     color: "black"
+                    // },
+                    Image {
+                        width: iconSize
+                        height: iconSize
+                        source: Qt.resolvedUrl("./icons/cat_sleep.png")
+                        fillMode: Image.Stretch
                     }
                 ]
             }
+            ///
+            CornerPanel {
+                id: tweak
+
+                alignment: Qt.AlignBottom | Qt.AlignLeft
+
+                backgroundColor: "black"
+                anchors {
+                    left: parent.left
+                    bottom: parent.bottom
+                }
+
+                vStrip: [
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/stat_sys_wifi_signal_3.png")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/stat_sys_data_bluetooth.png")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/brightness-2.svg")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/volume.svg")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("../icons/stat_sys_wifi_signal_3.png")
+                        implicitSize: iconSize
+                    }
+                ]
+
+                hStrip: [
+                    Rectangle {
+                        width: iconSize
+                        height: iconSize
+                        color: "black"
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/mic.svg")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/leaf.svg")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/sun-moon.svg")
+                        implicitSize: iconSize
+                    },
+                    IconImage {
+                        source: Qt.resolvedUrl("./icons/coffee.svg")
+                        implicitSize: iconSize
+                    }
+                ]
+            }
+
+            Notifications {
+                id: notif
+                anchors {
+                    right: parent.right
+                    bottom: parent.bottom
+                }
+            }
+
+
             // StyledSlider {}
 
             // IpcHandler {
@@ -103,7 +231,7 @@ ShellRoot {
         model: Quickshell.screens
         PanelWindow {
             id: window
-
+            // visible: false
             property var modelData
             screen: modelData
 
@@ -128,26 +256,8 @@ ShellRoot {
                 }
             }
 
-            Rectangle {
-                anchors {
-                    top: parent.top
-                    right: parent.right
-                }
-                radius: 8
-                color: "#fdfbfc"
-                height: 5
-                width: 405
-            }
-
-            Rectangle {
-                anchors {
-                    bottom: parent.bottom
-                    left: parent.left
-                }
-                radius: 8
-                color: "#fdfbfc"
-                height: 5
-                width: 405
+            WDecorations {
+                anchors.fill: parent
             }
         }
     }

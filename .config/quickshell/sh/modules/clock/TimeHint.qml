@@ -11,7 +11,7 @@ PopupWindow {
 
     Text {
         id: hint
-        text: Time.format("hh:mm")
+        text: TimeService.format("hh:mm")
         color: "white"
         font.pixelSize: 12
     }
@@ -22,12 +22,12 @@ PopupWindow {
             running: true
             NumberAnimation {
                 property: "x"
-                to: 50
+                to: 500
                 duration: 1000
             }
             NumberAnimation {
                 property: "y"
-                to: 50
+                to: 500
                 duration: 1000
             }
         }
